@@ -1,3 +1,24 @@
 <resources>
     <string name="app_name">Work Tracker</string>
+
+    <string name="add_work_day">Ajouter un jour de travail</string>
+    <string name="app_name">Work Tracker</string>
+    <string name="app_name">Work Tracker</string>
+    <string name="app_name">Work Tracker</string>
+    <string name="app_name">Work Tracker</string>
+    <string name="app_name">Work Tracker</string>
+    <string name="app_name">Work Tracker</string>
+    <string name="app_name">Work Tracker</string>
+    <string name="app_name">Work Tracker</string>
+    <string name="app_name">Work Tracker</string>
+    <string name="app_name">Work Tracker</string>
+    <string name="app_name">Work Tracker</string>
+    <string name="_00h_00_de_travail">00h:00 de travail</string>
+    <string name="creation_date">Date de création :</string>
+    <string name="sample_date">12-55-2019</string>
+    <string name="shift_start">Début du Shift :</string>
+    <string name="shift_end">Fin du Shift :</string>
+    <string name="select_hour">Sélectionnez une heure</string>
+
+
 </resources>

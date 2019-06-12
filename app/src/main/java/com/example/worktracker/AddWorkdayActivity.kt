@@ -13,18 +13,8 @@ import java.util.*
 import android.app.DatePickerDialog
 import android.widget.DatePicker
 import android.widget.TimePicker
-import java.time.Duration
-import java.time.LocalDate
-import java.time.Month
-import java.time.temporal.ChronoUnit
-import javax.xml.datatype.DatatypeConstants.DAYS
-import android.R.string
-
-
-
-
-
-
+import android.support.v4.content.ContextCompat
+import java.lang.Exception
 
 
 class AddWorkdayActivity : AppCompatActivity(), DatePickerDialog.OnDateSetListener, TimePickerDialog.OnTimeSetListener {
@@ -78,7 +68,7 @@ class AddWorkdayActivity : AppCompatActivity(), DatePickerDialog.OnDateSetListen
             arrayStart[4] = minute_x
 
             // print number of hours between dates
-            if (!editHeureDebut.text.isEmpty() && !editHeureFin.text.isEmpty()){
+            /*if (!editHeureDebut.text.isEmpty() && !editHeureFin.text.isEmpty()){
 
                 if (compareDateTime(arrayStart, arrayEnd)){
                     //println("OK")
@@ -86,15 +76,18 @@ class AddWorkdayActivity : AppCompatActivity(), DatePickerDialog.OnDateSetListen
                     showNumberOfHours()
                     txtTempsTotal.visibility = View.VISIBLE
                 }else{
-                    txtTempsTotal.visibility = View.INVISIBLE
+                    //txtTempsTotal.visibility = View.INVISIBLE
                     txtErrorLog.text = "Vos dates ne sont pas cohérantes."
                 }
             }else{
                 //println("NOT OK")
                 txtErrorLog.visibility = View.VISIBLE
-                txtTempsTotal.visibility = View.INVISIBLE
+                //txtTempsTotal.visibility = View.INVISIBLE
                 txtErrorLog.text = "Veuillez entrer toutes les données correctement."
-            }
+            }*/
+
+            runAfterTimeSelection()
+
         }
 
         if (clickedEnd) {
@@ -110,25 +103,7 @@ class AddWorkdayActivity : AppCompatActivity(), DatePickerDialog.OnDateSetListen
             arrayEnd[3] = hour_x
             arrayEnd[4] = minute_x
 
-            // print number of hours between dates
-            if (!editHeureDebut.text.isEmpty() && !editHeureFin.text.isEmpty()){
-
-                if (compareDateTime(arrayStart, arrayEnd)){
-                    //println("OK")
-                    txtErrorLog.visibility = View.INVISIBLE
-                    showNumberOfHours()
-                    txtTempsTotal.visibility = View.VISIBLE
-                }else{
-                    txtTempsTotal.visibility = View.INVISIBLE
-                    txtErrorLog.text = "Vos dates ne sont pas cohérantes."
-                }
-            }else{
-                //println("NOT OK")
-                txtErrorLog.visibility = View.VISIBLE
-                txtTempsTotal.visibility = View.INVISIBLE
-                txtErrorLog.text = "Veuillez entrer toutes les données correctement."
-            }
-
+            runAfterTimeSelection()
         }
     }
 
@@ -172,10 +147,10 @@ class AddWorkdayActivity : AppCompatActivity(), DatePickerDialog.OnDateSetListen
         }
 
         btnAnnuler.setOnClickListener{
-            //clearEditText()
+            clearEditText()
             // retour a la page arriere
 
-            getHoursBetweenDates(editHeureDebut.text.toString(), editHeureFin.text.toString())
+
 
 
 
@@ -185,11 +160,53 @@ class AddWorkdayActivity : AppCompatActivity(), DatePickerDialog.OnDateSetListen
 
     /* ------------------------------------------------------------------------------------- */
 
-    private fun showNumberOfHours() {
+    private fun runAfterTimeSelection(){
+        if (!editHeureDebut.text.isEmpty() && !editHeureFin.text.isEmpty()){
+            // check if date1 is before date2
+            if (compareDateTime(editHeureDebut.text.toString(), editHeureFin.text.toString())){
 
-        var timeLine = getHoursBetweenDates(editHeureDebut.text.toString(), editHeureFin.text.toString())
-        txtTempsTotal.text = "${timeLine[1]}h:${timeLine[2]} de travail"
+                // Make error messsage invisible
+                txtErrorLog.visibility = View.INVISIBLE
+
+                // get hours between dates
+                val timeValues = getHoursBetweenDates(editHeureDebut.text.toString(), editHeureFin.text.toString())
+
+                // cast to int
+                val finalDay = timeValues[0]!!.toInt()
+                val finalHour = timeValues[1]!!.toInt()
+                val finalMinute = timeValues[2]!!.toInt()
+
+                // check if day is greater than 1
+                if (finalDay < 1){
+
+                    // send them to textview while adding a 0 in front if less than 10
+                    txtTempsTotal.text = "${(if (finalHour < 10) "0" else "") + finalHour}h:${(if (finalMinute < 10) "0" else "") + finalMinute} de travail"
+                    txtTempsTotal.setTextColor(ContextCompat.getColor(this, R.color.colorBlack))
+                }else{
+                    txtErrorLog.visibility = View.VISIBLE
+                    txtErrorLog.text = "Vous ne pouvez pas avoir un shift de plus de 24h. Vérifiez vos dates"
+                    // reset hour text
+                    txtTempsTotal.text = "00h:00 de travail"
+                    txtTempsTotal.setTextColor(ContextCompat.getColor(this, R.color.colorRed))
+                }
+
+            }else{
+                txtErrorLog.visibility = View.VISIBLE
+                txtErrorLog.text = "Svp entrez des dates cohérantes."
+                // reset hour text
+                txtTempsTotal.text = "00h:00 de travail"
+                txtTempsTotal.setTextColor(ContextCompat.getColor(this, R.color.colorRed))
+            }
+
+        }else{
+            txtErrorLog.visibility = View.VISIBLE
+            txtErrorLog.text = "Remplissez correctement les champs d'heure."
+            // reset hour text
+            txtTempsTotal.text = "00h:00 de travail"
+        }
     }
+
+
 
     private fun clearEditText (){
 
@@ -207,9 +224,9 @@ class AddWorkdayActivity : AppCompatActivity(), DatePickerDialog.OnDateSetListen
         datePickerDialog.show()
     }
 
-    private fun compareDateTime (arrayDebut : IntArray, arrayFin : IntArray) : Boolean {
+    private fun compareDateTime (dateStart : String, dateStop : String) : Boolean {
 
-        var sdf = SimpleDateFormat("yyyy-MM-dd", Locale.FRENCH)
+        /*var sdf = SimpleDateFormat("yyyy-MM-dd", Locale.FRENCH)
         var stf = SimpleDateFormat("HH:mm", Locale.FRENCH)
         val date1 = sdf.parse("${arrayDebut[0]}-${arrayDebut[1]}-${arrayDebut[2]}")
         val date2 = sdf.parse("${arrayFin[0]}-${arrayFin[1]}-${arrayFin[2]}")
@@ -220,7 +237,37 @@ class AddWorkdayActivity : AppCompatActivity(), DatePickerDialog.OnDateSetListen
         return if(date1.before(date2)){
             //println( "Date1 is before Date2 OK")
             true
-        }else date1 == date2 && time1.before(time2)
+        }else date1 == date2 && time1.before(time2)*/
+
+        //val dateStart = "12/06/2019 10:31"
+        //val dateStop = "12/06/2019 10:30"
+
+        //HH converts hour in 24 hours format (0-23), day calculation
+        val format = SimpleDateFormat("dd/MM/yyyy HH:mm")
+
+        var d1: Date? = null
+        var d2: Date? = null
+
+        d1 = format.parse(dateStart)
+        d2 = format.parse(dateStop)
+
+        var result = d1.compareTo(d2)
+        //println(result)
+        when {
+            result < 0 -> {
+                println("Date1 is before date2. OK")
+                return true
+            }
+            result == 0 -> {
+                println("Date1 = date2. BAD")
+                return false
+            }
+            result > 0 -> {
+                println("Date1 is after date2. BAD")
+                return false
+            }
+        }
+        return false
     }
 
     private fun getSystemDate () : String {
@@ -262,11 +309,10 @@ class AddWorkdayActivity : AppCompatActivity(), DatePickerDialog.OnDateSetListen
             timeBetweenTwoDates[1] = diffHours.toString()
             timeBetweenTwoDates[2] = diffMinutes.toString()
 
-            /*
-            println("$diffDays days, ")
-            println("$diffHours hours, ")
-            println("$diffMinutes minutes, ")
-            //println("$diffSeconds seconds.")*/
+            /*println(timeBetweenTwoDates[0])
+            println(timeBetweenTwoDates[1])
+            println(timeBetweenTwoDates[2])*/
+
 
         } catch (e: Exception) {
             e.printStackTrace()
