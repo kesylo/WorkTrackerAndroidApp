@@ -15,6 +15,8 @@ import android.widget.DatePicker
 import android.widget.TimePicker
 import android.support.v4.content.ContextCompat
 import java.lang.Exception
+import android.widget.ArrayAdapter
+import android.widget.Toast
 
 
 class AddWorkdayActivity : AppCompatActivity(), DatePickerDialog.OnDateSetListener, TimePickerDialog.OnTimeSetListener {
@@ -36,6 +38,12 @@ class AddWorkdayActivity : AppCompatActivity(), DatePickerDialog.OnDateSetListen
     var clickedEnd = false
     var arrayStart = IntArray(5)
     var arrayEnd = IntArray(5)
+
+    // dataSet for autoComplete features text box
+    val enterprises = arrayOf(
+        "Red","Green","Blue","Maroon","Magenta",
+        "Gold","GreenYellow"
+    )
 
     override fun onDateSet(view: DatePicker?, year: Int, month: Int, dayOfMonth: Int) {
         year_x = year
@@ -67,24 +75,6 @@ class AddWorkdayActivity : AppCompatActivity(), DatePickerDialog.OnDateSetListen
             arrayStart[3] = hour_x
             arrayStart[4] = minute_x
 
-            // print number of hours between dates
-            /*if (!editHeureDebut.text.isEmpty() && !editHeureFin.text.isEmpty()){
-
-                if (compareDateTime(arrayStart, arrayEnd)){
-                    //println("OK")
-                    txtErrorLog.visibility = View.INVISIBLE
-                    showNumberOfHours()
-                    txtTempsTotal.visibility = View.VISIBLE
-                }else{
-                    //txtTempsTotal.visibility = View.INVISIBLE
-                    txtErrorLog.text = "Vos dates ne sont pas cohérantes."
-                }
-            }else{
-                //println("NOT OK")
-                txtErrorLog.visibility = View.VISIBLE
-                //txtTempsTotal.visibility = View.INVISIBLE
-                txtErrorLog.text = "Veuillez entrer toutes les données correctement."
-            }*/
 
             runAfterTimeSelection()
 
@@ -114,8 +104,14 @@ class AddWorkdayActivity : AppCompatActivity(), DatePickerDialog.OnDateSetListen
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_add_workday)
 
+
         // get live date
         editDateCreation.text = getSystemDate()
+
+        // Set autoComplete feature
+        editEntreprise.setAdapter(ArrayAdapter<String>(this, android.R.layout.simple_dropdown_item_1line, enterprises))
+        // The minimum number of characters to type to show the drop down
+        editEntreprise.threshold = 1
 
 
 
@@ -127,33 +123,64 @@ class AddWorkdayActivity : AppCompatActivity(), DatePickerDialog.OnDateSetListen
             runDateTimeSelector()
         }
 
+        editHeureDebut.setOnClickListener{
+            clickedEnd = false
+            clickedStart = true
+
+            runDateTimeSelector()
+        }
+
         buttonSelectHeureFin.setOnClickListener {
             clickedStart = false
             clickedEnd = true
 
             runDateTimeSelector()
-
-
         }
 
+        editHeureFin.setOnClickListener {
+            clickedStart = false
+            clickedEnd = true
+
+            runDateTimeSelector()
+        }
+
+
         btnEnregistrer.setOnClickListener{
-            if (!editHeureDebut.text.isEmpty() && !editHeureFin.text.isEmpty()){
+            if (txtErrorLog.visibility == View.INVISIBLE){
 
-                txtErrorLog.visibility = View.VISIBLE
-                txtErrorLog.text = "Aucune heure de travail choisie."
+                // prepare infos to be written
+                val worker = ModelWorker()
+
+                val workdayTime = editHeureDebut.text.toString()
+                val workDayParts = workdayTime.split(" ")
+                val workDate = workDayParts[0]
+                val workDateParts = workDate.split("/")
+                val workDayOnly = workDateParts[0]
+                val workMonthOnly = workDateParts[1]
+
+                worker.creationDate = editDateCreation.text.toString()
+                worker.workDayOnly = workDayOnly
+                worker.workMonthOnly = workMonthOnly
+                worker.startHour = editHeureDebut.text.toString()
+                worker.endHour = editHeureFin.text.toString()
+
+                // write to DB
+                MainActivity.dbHandler.addWorkDay(this, worker)
+
+                // clear all fields
+                clearEditText()
 
 
+
+            }else{
+                Toast.makeText(this, "Vérifiez tous les champs avant d'enregistrer", Toast.LENGTH_SHORT).show()
             }
         }
 
         btnAnnuler.setOnClickListener{
             clearEditText()
             // retour a la page arriere
-
-
-
-
-
+            finish()
         }
     }
 
@@ -212,6 +239,8 @@ class AddWorkdayActivity : AppCompatActivity(), DatePickerDialog.OnDateSetListen
 
         editHeureDebut.text.clear()
         editHeureFin.text.clear()
+        editEntreprise.text.clear()
+        editSalaire.text.clear()
     }
 
     private fun runDateTimeSelector (){
