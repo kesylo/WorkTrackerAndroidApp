@@ -1,38 +1,37 @@
 package com.example.worktracker
 
 import android.annotation.SuppressLint
+import android.app.DatePickerDialog
 import android.app.TimePickerDialog
-import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
+import android.support.v4.content.ContextCompat
+import android.support.v7.app.AppCompatActivity
 import android.view.View
+import android.widget.ArrayAdapter
+import android.widget.DatePicker
+import android.widget.TimePicker
+import android.widget.Toast
 import kotlinx.android.synthetic.main.activity_add_workday.*
 import java.text.SimpleDateFormat
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 import java.util.*
-import android.app.DatePickerDialog
-import android.widget.DatePicker
-import android.widget.TimePicker
-import android.support.v4.content.ContextCompat
-import java.lang.Exception
-import android.widget.ArrayAdapter
-import android.widget.Toast
 
 
 class AddWorkdayActivity : AppCompatActivity(), DatePickerDialog.OnDateSetListener, TimePickerDialog.OnTimeSetListener {
 
     // variables for dateTime Picker
-    var day : Int = 0
-    var month : Int = 0
-    var year : Int = 0
-    var hour : Int = 0
-    var minute : Int = 0
+    var day: Int = 0
+    var month: Int = 0
+    var year: Int = 0
+    var hour: Int = 0
+    var minute: Int = 0
 
-    var day_x : Int = 0
-    var month_x : Int = 0
-    var year_x : Int = 0
-    var hour_x : Int = 0
-    var minute_x : Int = 0
+    var day_x: Int = 0
+    var month_x: Int = 0
+    var year_x: Int = 0
+    var hour_x: Int = 0
+    var minute_x: Int = 0
 
     var clickedStart = false
     var clickedEnd = false
@@ -41,8 +40,8 @@ class AddWorkdayActivity : AppCompatActivity(), DatePickerDialog.OnDateSetListen
 
     // dataSet for autoComplete features text box
     val enterprises = arrayOf(
-        "Red","Green","Blue","Maroon","Magenta",
-        "Gold","GreenYellow"
+        "Red", "Green", "Blue", "Maroon", "Magenta",
+        "Gold", "GreenYellow"
     )
 
     override fun onDateSet(view: DatePicker?, year: Int, month: Int, dayOfMonth: Int) {
@@ -52,8 +51,10 @@ class AddWorkdayActivity : AppCompatActivity(), DatePickerDialog.OnDateSetListen
         val calendar = Calendar.getInstance()
         hour = calendar.get(Calendar.HOUR)
         minute = calendar.get(Calendar.MINUTE)
-        var timePickerDialog = TimePickerDialog(this, this,
-            hour, minute, true)
+        var timePickerDialog = TimePickerDialog(
+            this, this,
+            hour, minute, true
+        )
         timePickerDialog.show()
     }
 
@@ -63,12 +64,10 @@ class AddWorkdayActivity : AppCompatActivity(), DatePickerDialog.OnDateSetListen
         minute_x = minute
 
         if (clickedStart) {
-            editHeureDebut.setText(
-                "${(if (day_x < 10) "0" else "") + day_x}/" +
-                        "${(if (month_x < 10) "0" else "") + month_x}/$year_x " +
-                        "${(if (hour_x < 10) "0" else "") + hour_x}:" +
-                        "${(if (minute_x < 10) "0" else "") + minute_x}"
-            )
+            editHeureDebut.text = "${(if (day_x < 10) "0" else "") + day_x}/" +
+                    "${(if (month_x < 10) "0" else "") + month_x}/$year_x " +
+                    "${(if (hour_x < 10) "0" else "") + hour_x}:" +
+                    "${(if (minute_x < 10) "0" else "") + minute_x}"
             arrayStart[0] = year_x
             arrayStart[1] = month_x
             arrayStart[2] = day_x
@@ -81,12 +80,10 @@ class AddWorkdayActivity : AppCompatActivity(), DatePickerDialog.OnDateSetListen
         }
 
         if (clickedEnd) {
-            editHeureFin.setText(
-                "${(if (day_x < 10) "0" else "") + day_x}/" +
-                        "${(if (month_x < 10) "0" else "") + month_x}/$year_x " +
-                        "${(if (hour_x < 10) "0" else "") + hour_x}:" +
-                        "${(if (minute_x < 10) "0" else "") + minute_x}"
-            )
+            editHeureFin.text = "${(if (day_x < 10) "0" else "") + day_x}/" +
+                    "${(if (month_x < 10) "0" else "") + month_x}/$year_x " +
+                    "${(if (hour_x < 10) "0" else "") + hour_x}:" +
+                    "${(if (minute_x < 10) "0" else "") + minute_x}"
             arrayEnd[0] = year_x
             arrayEnd[1] = month_x
             arrayEnd[2] = day_x
@@ -98,7 +95,6 @@ class AddWorkdayActivity : AppCompatActivity(), DatePickerDialog.OnDateSetListen
     }
 
 
-
     @SuppressLint("SetTextI18n")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -106,7 +102,9 @@ class AddWorkdayActivity : AppCompatActivity(), DatePickerDialog.OnDateSetListen
 
 
         // get live date
-        editDateCreation.text = getSystemDate()
+        editDateCreationUP.text = getSystemDate()
+        editHeureDebut.text = "${getSystemDate()} ${getSystemTime()}"
+        editHeureFin.text = "${getSystemDate()} ${getSystemTime()}"
 
         // Set autoComplete feature
         editEntreprise.setAdapter(ArrayAdapter<String>(this, android.R.layout.simple_dropdown_item_1line, enterprises))
@@ -116,37 +114,22 @@ class AddWorkdayActivity : AppCompatActivity(), DatePickerDialog.OnDateSetListen
 
 
 
-        buttonSelectHeureDebut.setOnClickListener{
+        buttonSelectHeureDebutUP.setOnClickListener {
             clickedEnd = false
             clickedStart = true
 
             runDateTimeSelector()
         }
 
-        editHeureDebut.setOnClickListener{
-            clickedEnd = false
-            clickedStart = true
-
-            runDateTimeSelector()
-        }
-
-        buttonSelectHeureFin.setOnClickListener {
+        buttonSelectHeureFinUP.setOnClickListener {
             clickedStart = false
             clickedEnd = true
 
             runDateTimeSelector()
         }
 
-        editHeureFin.setOnClickListener {
-            clickedStart = false
-            clickedEnd = true
-
-            runDateTimeSelector()
-        }
-
-
-        btnEnregistrer.setOnClickListener{
-            if (txtErrorLog.visibility == View.INVISIBLE){
+        btnEnregistrerUP.setOnClickListener {
+            if (txtErrorLog.visibility == View.INVISIBLE) {
 
                 // prepare infos to be written
                 val worker = ModelWorker()
@@ -158,11 +141,16 @@ class AddWorkdayActivity : AppCompatActivity(), DatePickerDialog.OnDateSetListen
                 val workDayOnly = workDateParts[0]
                 val workMonthOnly = workDateParts[1]
 
-                worker.creationDate = editDateCreation.text.toString()
+                worker.creationDate = editDateCreationUP.text.toString()
                 worker.workDayOnly = workDayOnly
                 worker.workMonthOnly = workMonthOnly
                 worker.startHour = editHeureDebut.text.toString()
                 worker.endHour = editHeureFin.text.toString()
+
+                worker.salaryPerHour = editSalaire.text.toString()
+                worker.enterprise = editEntreprise.text.toString()
+                worker.numberOfHours = txtTempsTotal.text.toString()
+
 
                 // write to DB
                 MainActivity.dbHandler.addWorkDay(this, worker)
@@ -171,13 +159,12 @@ class AddWorkdayActivity : AppCompatActivity(), DatePickerDialog.OnDateSetListen
                 clearEditText()
 
 
-
-            }else{
+            } else {
                 Toast.makeText(this, "Vérifiez tous les champs avant d'enregistrer", Toast.LENGTH_SHORT).show()
             }
         }
 
-        btnAnnuler.setOnClickListener{
+        btnAnnulerUP.setOnClickListener {
             clearEditText()
             // retour a la page arriere
             finish()
@@ -187,10 +174,10 @@ class AddWorkdayActivity : AppCompatActivity(), DatePickerDialog.OnDateSetListen
 
     /* ------------------------------------------------------------------------------------- */
 
-    private fun runAfterTimeSelection(){
-        if (!editHeureDebut.text.isEmpty() && !editHeureFin.text.isEmpty()){
+    private fun runAfterTimeSelection() {
+        if (!editHeureDebut.text.isEmpty() && !editHeureFin.text.isEmpty()) {
             // check if date1 is before date2
-            if (compareDateTime(editHeureDebut.text.toString(), editHeureFin.text.toString())){
+            if (compareDateTime(editHeureDebut.text.toString(), editHeureFin.text.toString())) {
 
                 // Make error messsage invisible
                 txtErrorLog.visibility = View.INVISIBLE
@@ -204,12 +191,13 @@ class AddWorkdayActivity : AppCompatActivity(), DatePickerDialog.OnDateSetListen
                 val finalMinute = timeValues[2]!!.toInt()
 
                 // check if day is greater than 1
-                if (finalDay < 1){
+                if (finalDay < 1) {
 
                     // send them to textview while adding a 0 in front if less than 10
-                    txtTempsTotal.text = "${(if (finalHour < 10) "0" else "") + finalHour}h:${(if (finalMinute < 10) "0" else "") + finalMinute} de travail"
+                    txtTempsTotal.text =
+                        "${(if (finalHour < 10) "0" else "") + finalHour}h:${(if (finalMinute < 10) "0" else "") + finalMinute} de travail"
                     txtTempsTotal.setTextColor(ContextCompat.getColor(this, R.color.colorBlack))
-                }else{
+                } else {
                     txtErrorLog.visibility = View.VISIBLE
                     txtErrorLog.text = "Vous ne pouvez pas avoir un shift de plus de 24h. Vérifiez vos dates"
                     // reset hour text
@@ -217,7 +205,7 @@ class AddWorkdayActivity : AppCompatActivity(), DatePickerDialog.OnDateSetListen
                     txtTempsTotal.setTextColor(ContextCompat.getColor(this, R.color.colorRed))
                 }
 
-            }else{
+            } else {
                 txtErrorLog.visibility = View.VISIBLE
                 txtErrorLog.text = "Svp entrez des dates cohérantes."
                 // reset hour text
@@ -225,7 +213,7 @@ class AddWorkdayActivity : AppCompatActivity(), DatePickerDialog.OnDateSetListen
                 txtTempsTotal.setTextColor(ContextCompat.getColor(this, R.color.colorRed))
             }
 
-        }else{
+        } else {
             txtErrorLog.visibility = View.VISIBLE
             txtErrorLog.text = "Remplissez correctement les champs d'heure."
             // reset hour text
@@ -234,26 +222,25 @@ class AddWorkdayActivity : AppCompatActivity(), DatePickerDialog.OnDateSetListen
     }
 
 
+    private fun clearEditText() {
 
-    private fun clearEditText (){
-
-        editHeureDebut.text.clear()
-        editHeureFin.text.clear()
+        //editHeureDebut.text.clear()
+        //editHeureFin.text.clear()
         editEntreprise.text.clear()
         editSalaire.text.clear()
     }
 
-    private fun runDateTimeSelector (){
+    private fun runDateTimeSelector() {
 
         val calendar = Calendar.getInstance()
         year = calendar.get(Calendar.YEAR)
         month = calendar.get(Calendar.MONTH)
         day = calendar.get(Calendar.DAY_OF_MONTH)
-        var datePickerDialog = DatePickerDialog(this,this, year, month, day)
+        var datePickerDialog = DatePickerDialog(this, this, year, month, day)
         datePickerDialog.show()
     }
 
-    private fun compareDateTime (dateStart : String, dateStop : String) : Boolean {
+    private fun compareDateTime(dateStart: String, dateStop: String): Boolean {
 
         /*var sdf = SimpleDateFormat("yyyy-MM-dd", Locale.FRENCH)
         var stf = SimpleDateFormat("HH:mm", Locale.FRENCH)
@@ -299,16 +286,25 @@ class AddWorkdayActivity : AppCompatActivity(), DatePickerDialog.OnDateSetListen
         return false
     }
 
-    private fun getSystemDate () : String {
+    private fun getSystemDate(): String {
 
         val current = LocalDateTime.now()
-        val formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy")
+        val formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy")
         val formatted = current.format(formatter)
 
         return formatted
     }
 
-    private fun getHoursBetweenDates(dateStart : String, dateStop : String ) : Array<String?> {
+
+    private fun getSystemTime(): String {
+        val date = Date()
+        val strDateFormat = "HH:mm"
+        val dateFormat = SimpleDateFormat(strDateFormat)
+        val formattedDate = dateFormat.format(date)
+        return formattedDate
+    }
+
+    private fun getHoursBetweenDates(dateStart: String, dateStop: String): Array<String?> {
 
         val timeBetweenTwoDates = arrayOfNulls<String>(3)
 

@@ -8,4 +8,9 @@ class ModelWorker {
     var startHour : String = ""
     var endHour : String = ""
 
+    var numberOfHours : String = ""
+    var enterprise : String = ""
+    var salaryPerHour : String = ""
+
+
 }

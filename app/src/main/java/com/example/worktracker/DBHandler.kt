@@ -12,8 +12,8 @@ class DBHandler (context : Context, name : String?, factory: SQLiteDatabase.Curs
     SQLiteOpenHelper (context, DATABASE_NAME, factory, DATABASE_VERSION) {
 
     companion object {
-        private val DATABASE_NAME = "Worker.db"
-        private val DATABASE_VERSION = 1
+        private val DATABASE_NAME = "Worker2.db"
+        private val DATABASE_VERSION = 3
 
         // define first table
         val WORKDAY_TABLE_NAME = "Workday"
@@ -24,6 +24,10 @@ class DBHandler (context : Context, name : String?, factory: SQLiteDatabase.Curs
         val COLUMN_WORKDAY_START_TIME = "start_time"
         val COLUMN_WORKDAY_END_TIME = "end_time"
 
+        val COLUMN_WORKDAY_NBR_HOURS_TOTAL = "work_day_total_hour"
+        val COLUMN_ENTERPRISE = "enterprise"
+        val COLUMN_SALARY_PER_HOUR  = "salary"
+
     }
 
     override fun onCreate(db: SQLiteDatabase?) {
@@ -33,12 +37,22 @@ class DBHandler (context : Context, name : String?, factory: SQLiteDatabase.Curs
                 "$COLUMN_WORKDAY_CREATION_DATE TEXT," +
                 "$COLUMN_WORKDAY_WORK_DAY_ONLY TEXT," +
                 "$COLUMN_WORKDAY_WORK_MONTH_ONLY TEXT," +
+                "$COLUMN_WORKDAY_NBR_HOURS_TOTAL TEXT," +
+                "$COLUMN_ENTERPRISE TEXT," +
+                "$COLUMN_SALARY_PER_HOUR TEXT," +
                 "$COLUMN_WORKDAY_START_TIME TEXT," +
                 "$COLUMN_WORKDAY_END_TIME TEXT)")
         db?.execSQL(CREATE_WORKDAYS_TABLE)
     }
 
     override fun onUpgrade(db: SQLiteDatabase?, oldVersion: Int, newVersion: Int) {
+        // change db file
+   /*     if (oldVersion < 2){
+            db?.execSQL("Alter Table $WORKDAY_TABLE_NAME " +
+            "Add $COLUMN_SALARY_PER_HOUR TEXT NULL" +
+                    "Add $COLUMN_ENTERPRISE TEXT NULL" +
+                    "Add $COLUMN_WORKDAY_NBR_HOURS_TOTAL TEXT NULL")
+        }*/
 
     }
 
@@ -58,6 +72,11 @@ class DBHandler (context : Context, name : String?, factory: SQLiteDatabase.Curs
                 workday.workdayID = cursor.getInt(cursor.getColumnIndex(COLUMN_WORKDAY_ID))
                 workday.creationDate = cursor.getString(cursor.getColumnIndex(COLUMN_WORKDAY_CREATION_DATE))
                 workday.workDayOnly = cursor.getString(cursor.getColumnIndex(COLUMN_WORKDAY_WORK_DAY_ONLY))
+
+                workday.numberOfHours = cursor.getString(cursor.getColumnIndex(COLUMN_WORKDAY_NBR_HOURS_TOTAL))
+                workday.enterprise = cursor.getString(cursor.getColumnIndex(COLUMN_ENTERPRISE))
+                workday.salaryPerHour = cursor.getString(cursor.getColumnIndex(COLUMN_SALARY_PER_HOUR))
+
                 workday.workMonthOnly = cursor.getString(cursor.getColumnIndex(COLUMN_WORKDAY_WORK_MONTH_ONLY))
                 workday.startHour = cursor.getString(cursor.getColumnIndex(COLUMN_WORKDAY_START_TIME))
                 workday.endHour = cursor.getString(cursor.getColumnIndex(COLUMN_WORKDAY_END_TIME))
@@ -79,6 +98,10 @@ class DBHandler (context : Context, name : String?, factory: SQLiteDatabase.Curs
         values.put(COLUMN_WORKDAY_WORK_MONTH_ONLY, worker.workMonthOnly)
         values.put(COLUMN_WORKDAY_START_TIME, worker.startHour)
         values.put(COLUMN_WORKDAY_END_TIME, worker.endHour)
+
+        values.put(COLUMN_WORKDAY_NBR_HOURS_TOTAL, worker.numberOfHours)
+        values.put(COLUMN_ENTERPRISE, worker.enterprise)
+        values.put(COLUMN_SALARY_PER_HOUR, worker.salaryPerHour)
 
         val db = this.writableDatabase
         try {
@@ -104,11 +127,24 @@ class DBHandler (context : Context, name : String?, factory: SQLiteDatabase.Curs
         return result
     }
 
-    fun updateWorkday (id : String, workDayOnly : String) : Boolean{
+    fun updateWorkday (id : String, creationDate : String, workDayOnly : String, workMonthOnly : String,
+                       startHour : String, endHour : String, numberOfHour : String, enterprise : String,
+                       salaryPerHour : String) : Boolean {
+
         val db = this.writableDatabase
         val contentValues = ContentValues()
         var result = false
-        contentValues.put(COLUMN_WORKDAY_WORK_DAY_ONLY,workDayOnly)
+
+        contentValues.put(COLUMN_WORKDAY_CREATION_DATE, creationDate)
+        contentValues.put(COLUMN_WORKDAY_WORK_DAY_ONLY, workDayOnly)
+        contentValues.put(COLUMN_WORKDAY_WORK_MONTH_ONLY, workMonthOnly)
+        contentValues.put(COLUMN_WORKDAY_START_TIME, startHour)
+        contentValues.put(COLUMN_WORKDAY_END_TIME, endHour)
+        contentValues.put(COLUMN_WORKDAY_NBR_HOURS_TOTAL, numberOfHour)
+        contentValues.put(COLUMN_ENTERPRISE, enterprise)
+        contentValues.put(COLUMN_SALARY_PER_HOUR, salaryPerHour)
+
+
         try {
             db.update(WORKDAY_TABLE_NAME, contentValues, "$COLUMN_WORKDAY_ID = ?", arrayOf(id))
             result = true

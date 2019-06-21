@@ -9,6 +9,9 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import android.widget.Toast
+import kotlinx.android.synthetic.main.activity_add_workday.view.*
+import kotlinx.android.synthetic.main.activity_update_workday.view.*
+import kotlinx.android.synthetic.main.activity_update_workday.view.editDateCreationUP
 import kotlinx.android.synthetic.main.list_items.view.*
 
 class RVAdapter (myCtxt : Context, val workdays : ArrayList<ModelWorker>) : RecyclerView.Adapter<RVAdapter.ViewHolder>() {
@@ -23,8 +26,10 @@ class RVAdapter (myCtxt : Context, val workdays : ArrayList<ModelWorker>) : Recy
         val txtStartMinute = itemView.txtStartMinute!!
         val txtEndHour = itemView.textViewHourTo!!
         val txtEndMinute = itemView.txtEndMinute!!
-        val btnDelete = itemView.buttonDelete
-        val txtNomEntreprise = itemView.txtNomEntreprise
+        val btnDelete = itemView.buttonDelete!!
+
+        val txtNomEntreprise = itemView.txtNomEntreprise!!
+        val txtSalaryPerDay = itemView.txtSalaireJournalier!!
 
     }
 
@@ -42,6 +47,10 @@ class RVAdapter (myCtxt : Context, val workdays : ArrayList<ModelWorker>) : Recy
         val workday : ModelWorker = workdays[p1]
         val workDayOnly = workday.workDayOnly
         val workMonthOnly = workday.workMonthOnly
+        val enterprise = workday.enterprise
+        val salaryPerHour = workday.salaryPerHour
+        val nberHoursTotal = workday.numberOfHours
+
 
         // split hour Start
         val longStartDateTime = workday.startHour
@@ -104,6 +113,10 @@ class RVAdapter (myCtxt : Context, val workdays : ArrayList<ModelWorker>) : Recy
         p0.txtEndHour.text = endHourOnly
         p0.txtEndMinute.text = endMinuteOnly
 
+        p0.txtNomEntreprise.text = enterprise
+        // a multiplier par nbre d'heure
+        p0.txtSalaryPerDay.text = salaryPerHour
+
         // delete button
         p0.btnDelete.setOnClickListener{
             val creationDate = workday.creationDate
@@ -135,13 +148,61 @@ class RVAdapter (myCtxt : Context, val workdays : ArrayList<ModelWorker>) : Recy
             val view = inflater.inflate(R.layout.activity_update_workday, null)
 
             // edit these
-            val txtWorkday : TextView = view.findViewById(R.id.editUpWorkStartDay)
+            val txtCreationDate : TextView = view.findViewById(R.id.editDateCreationUP)
+            val txtStartDateShift : TextView = view.findViewById(R.id.editHeureDebutUP)
+            val txtEndDateShift : TextView = view.findViewById(R.id.editHeureFinUP)
+            val txtTotalHours : TextView = view.findViewById(R.id.txtTempsTotalUP)
+            val txtEntreprise : TextView = view.findViewById(R.id.editEntrepriseUP)
+            val txtSalary : TextView = view.findViewById(R.id.editSalaireUP)
+
 
             // with the current values
-            txtWorkday.text = workday.startHour
+            //txtHeureDebut.text = workday.startHour
+            txtCreationDate.text = workday.creationDate
+            txtTotalHours.text = workday.numberOfHours
+            txtEntreprise.text = workday.enterprise
+            txtSalary.text = workday.salaryPerHour
 
             val builder = AlertDialog.Builder(myCtxt)
-                .setTitle("Mofifier")
+                .setTitle("Modifier un jour de travail")
+                .setView(view)
+                .setPositiveButton("Modifier", DialogInterface.OnClickListener { dialog, which ->
+                    val isUpdate = MainActivity.dbHandler.updateWorkday(
+                        workday.workdayID.toString(),
+                        view.editDateCreationUP.text.toString(),
+                        view.editHeureFinUP.text.toString(), //
+                        view.editHeureFinUP.text.toString(), //
+                        view.editHeureDebutUP.text.toString(),
+                        view.editHeureFinUP.text.toString(),
+                        view.txtTempsTotalUP.text.toString(),
+                        view.editEntrepriseUP.text.toString(),
+                        view.editSalaireUP.text.toString()
+                    )
+                    if (isUpdate){
+                        workdays[p1].creationDate = view.editDateCreationUP.text.toString()
+                        workdays[p1].enterprise = view.editEntrepriseUP.text.toString()
+                        workdays[p1].enterprise = view.editEntrepriseUP.text.toString()
+                        workdays[p1].salaryPerHour = view.editSalaireUP.text.toString()
+                        workdays[p1].startHour = view.editHeureFinUP.text.toString()
+                        workdays[p1].workDayOnly = view.editHeureFinUP.text.toString()
+                        workdays[p1].numberOfHours = view.txtTempsTotalUP.text.toString()
+
+                        notifyDataSetChanged()
+                        Toast.makeText(myCtxt, "Mise à jour OK ", Toast.LENGTH_SHORT).show()
+                    }else{
+                        Toast.makeText(myCtxt, "Erreur lors de la mise a jour ", Toast.LENGTH_SHORT).show()
+                    }
+                })
+
+                .setNegativeButton("Annuler", DialogInterface.OnClickListener { dialog, which ->
+
+                })
+
+            val alert = builder.create()
+            alert.show()
+
+            /*val builder = AlertDialog.Builder(myCtxt)
+                .setTitle("Modifier un jour de travail")
                 .setMessage("Voulez vous modifier ce jour de travail? ")
                 .setPositiveButton("Oui", DialogInterface.OnClickListener { dialog, which ->
 
@@ -156,7 +217,7 @@ class RVAdapter (myCtxt : Context, val workdays : ArrayList<ModelWorker>) : Recy
                 })
                 .setNegativeButton("Non", DialogInterface.OnClickListener { dialog, which ->  })
                 .setIcon(R.drawable.trash1)
-                .show()
+                .show()*/
         }
     }
 

@@ -17,7 +17,7 @@
 
         <TextView android:layout_width="match_parent"
                   android:layout_height="wrap_content"
-                  android:text="Mofifier un jour de travail"
+                  android:text="Modifier un jour de travail"
                   android:layout_marginTop="18dp"
                   android:textColor="#FFF"
                   android:textAlignment="center"
@@ -41,12 +41,12 @@
         <android.support.constraint.ConstraintLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent" app:layout_constraintTop_toTopOf="@+id/editEntreprise"
-                app:layout_constraintStart_toStartOf="@+id/editDateCreation"
-                app:layout_constraintEnd_toStartOf="@+id/editDateCreation"
+                app:layout_constraintStart_toStartOf="@+id/editDateCreationUP"
+                app:layout_constraintEnd_toStartOf="@+id/editDateCreationUP"
                 app:layout_constraintBottom_toTopOf="@+id/editEntreprise">
 
             <TextView
-                    android:id="@+id/txtTempsTotal"
+                    android:id="@+id/txtTempsTotalUP"
                     android:textSize="24sp"
                     android:textColor="@color/colorRed"
                     android:visibility="visible"
@@ -54,11 +54,12 @@
                     android:text="@string/_00h_00_de_travail"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="8dp"
-                    app:layout_constraintTop_toTopOf="@+id/guideline" android:layout_marginBottom="8dp"
-                    app:layout_constraintBottom_toTopOf="@+id/guideline4" android:layout_marginEnd="16dp"
-                    app:layout_constraintEnd_toEndOf="parent" android:layout_marginStart="16dp"
-                    app:layout_constraintStart_toStartOf="parent" android:textAlignment="center"/>
+                    android:textAlignment="center"
+                    android:layout_marginEnd="8dp"
+                    app:layout_constraintEnd_toEndOf="parent" android:layout_marginStart="8dp"
+                    app:layout_constraintStart_toStartOf="parent" android:layout_marginTop="8dp"
+                    app:layout_constraintTop_toTopOf="@+id/guideline10" android:layout_marginBottom="8dp"
+                    app:layout_constraintBottom_toTopOf="@+id/guideline9"/>
             <TextView
                     android:textSize="18sp"
                     android:textColor="@color/colorPrimaryDark"
@@ -67,45 +68,84 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:id="@+id/textView3"
-                    android:layout_marginTop="8dp"
-                    app:layout_constraintTop_toTopOf="parent" android:layout_marginBottom="8dp"
+                    app:layout_constraintTop_toTopOf="parent"
                     app:layout_constraintBottom_toTopOf="@+id/guideline"
-                    app:layout_constraintEnd_toStartOf="@+id/guideline2"
-                    app:layout_constraintStart_toStartOf="parent" android:layout_marginStart="16dp"/>
+                    app:layout_constraintStart_toStartOf="parent" android:layout_marginStart="16dp"
+                    android:layout_marginEnd="8dp" app:layout_constraintEnd_toStartOf="@+id/guideline19"/>
             <TextView
-                    android:id="@+id/editDateCreation"
+                    android:id="@+id/editDateCreationUP"
                     android:textSize="18sp"
-                    android:textColor="@color/colorPrimaryDark"
+                    android:textColor="#E91E63"
                     android:fontFamily="@font/montserrat"
-                    android:text="@string/sample_date"
+                    android:text="12/02/2019"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="8dp"
-                    app:layout_constraintTop_toTopOf="parent" android:layout_marginBottom="8dp"
-                    app:layout_constraintBottom_toTopOf="@+id/guideline" android:layout_marginStart="8dp"
-                    app:layout_constraintStart_toStartOf="@+id/guideline2"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toTopOf="@+id/guideline"
                     android:textAlignment="textEnd"
-                    android:layout_marginEnd="16dp" app:layout_constraintEnd_toEndOf="parent"/>
+                    android:layout_marginEnd="16dp" app:layout_constraintEnd_toEndOf="parent"
+                    android:layout_marginStart="8dp" app:layout_constraintStart_toStartOf="@+id/guideline19"/>
+            <TextView
+                    android:id="@+id/editHeureDebutUP"
+                    android:textSize="18sp"
+                    android:textColor="#E91E63"
+                    android:fontFamily="@font/montserrat"
+                    android:text="00/00/0000 00:00"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintBottom_toTopOf="@+id/guideline6" android:layout_marginEnd="8dp"
+                    app:layout_constraintEnd_toStartOf="@+id/guideline19" android:textAlignment="viewStart"
+                    android:layout_marginBottom="8dp"
+                    android:layout_marginTop="8dp" app:layout_constraintTop_toBottomOf="@+id/textView5"/>
+            <TextView
+                    android:id="@+id/editHeureFinUP"
+                    android:textSize="18sp"
+                    android:textColor="#E91E63"
+                    android:fontFamily="@font/montserrat"
+                    android:text="00/00/0000 00:00"
+                    android:layout_width="196dp"
+                    android:layout_height="wrap_content"
+                    android:textAlignment="viewStart"
+                    android:layout_marginTop="8dp"
+                    app:layout_constraintTop_toBottomOf="@+id/textView" android:layout_marginBottom="8dp"
+                    app:layout_constraintBottom_toTopOf="@+id/guideline8" android:layout_marginStart="16dp"
+                    app:layout_constraintStart_toStartOf="parent" android:layout_marginEnd="8dp"
+                    app:layout_constraintEnd_toStartOf="@+id/guideline19"/>
             <TextView
                     android:textSize="18sp"
                     android:textColor="@color/colorPrimaryDark"
                     android:text="@string/shift_start"
                     android:fontFamily="@font/montserrat"
-                    android:layout_width="match_parent"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="8dp"
-                    app:layout_constraintTop_toTopOf="@+id/guideline4"
-                    android:layout_marginBottom="8dp"
-                    app:layout_constraintBottom_toTopOf="@+id/guideline5"
-                    app:layout_constraintStart_toStartOf="parent"
-                    android:layout_marginStart="16dp" app:layout_constraintEnd_toEndOf="parent"
-                    android:layout_marginEnd="16dp" android:id="@+id/textView5"
-                    app:layout_constraintHorizontal_bias="1.0" app:layout_constraintVertical_bias="1.0"/>
+                    android:id="@+id/textView5"
+                    android:layout_marginTop="8dp" app:layout_constraintTop_toTopOf="@+id/guideline4"
+                    android:layout_marginStart="16dp" app:layout_constraintStart_toStartOf="parent"
+                    android:textAlignment="textStart"
+                    android:layout_marginEnd="8dp"
+                    app:layout_constraintEnd_toStartOf="@+id/guideline19"
+            />
             <android.support.constraint.Guideline
                     android:orientation="horizontal"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:id="@+id/guideline4" app:layout_constraintGuide_percent="0.2"/>
+                    android:id="@+id/guideline4" app:layout_constraintGuide_percent="0.3"/>
+            <TextView
+                    android:textSize="18sp"
+                    android:textColor="@color/colorPrimaryDark"
+                    android:text="€"
+                    android:fontFamily="@font/montserrat"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/textView6"
+                    android:textAlignment="textEnd"
+                    android:layout_marginEnd="16dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    android:layout_marginTop="8dp"
+                    app:layout_constraintTop_toTopOf="@+id/guideline15" android:layout_marginBottom="8dp"
+                    app:layout_constraintBottom_toTopOf="@+id/guideline4"/>
             <TextView
                     android:textSize="18sp"
                     android:textColor="@color/colorPrimaryDark"
@@ -113,13 +153,12 @@
                     android:fontFamily="@font/montserrat"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:id="@+id/textView6"
-                    android:layout_marginTop="8dp"
-                    app:layout_constraintTop_toTopOf="@+id/guideline8" android:layout_marginBottom="8dp"
-                    app:layout_constraintBottom_toTopOf="@+id/guideline3" app:layout_constraintVertical_bias="0.25"
+                    android:id="@+id/textView7"
+                    android:textAlignment="textEnd"
                     android:layout_marginEnd="16dp" app:layout_constraintEnd_toEndOf="parent"
-                    android:layout_marginStart="8dp" app:layout_constraintStart_toStartOf="@+id/guideline11"
-                    android:textAlignment="center"/>
+                    app:layout_constraintTop_toTopOf="@+id/guideline"
+                    app:layout_constraintBottom_toTopOf="@+id/guideline15"
+                    android:layout_marginStart="8dp" app:layout_constraintStart_toStartOf="@+id/guideline19"/>
             <TextView
                     android:textSize="18sp"
                     android:textColor="@color/colorPrimaryDark"
@@ -128,28 +167,26 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:id="@+id/textView2"
+                    app:layout_constraintTop_toTopOf="@+id/guideline" android:layout_marginStart="16dp"
                     app:layout_constraintStart_toStartOf="parent"
-                    android:layout_marginTop="8dp"
-                    app:layout_constraintTop_toTopOf="@+id/guideline8" android:layout_marginBottom="8dp"
-                    app:layout_constraintBottom_toTopOf="@+id/guideline3"
-                    android:layout_marginStart="16dp" android:layout_marginEnd="8dp"
-                    app:layout_constraintEnd_toStartOf="@+id/guideline11"/>
+                    app:layout_constraintBottom_toTopOf="@+id/guideline15" android:layout_marginEnd="8dp"
+                    app:layout_constraintEnd_toStartOf="@+id/guideline19"/>
             <TextView
                     android:textSize="18sp"
                     android:textColor="@color/colorPrimaryDark"
                     android:text="@string/shift_end"
                     android:fontFamily="@font/montserrat"
-                    android:layout_width="match_parent"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    app:layout_constraintEnd_toEndOf="parent" app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintHorizontal_bias="0.0" android:layout_marginTop="8dp"
-                    app:layout_constraintTop_toTopOf="@+id/guideline6" android:layout_marginBottom="8dp"
-                    app:layout_constraintBottom_toTopOf="@+id/guideline7" android:id="@+id/textView"
-                    android:layout_marginStart="16dp" android:layout_marginEnd="16dp"/>
+                    android:id="@+id/textView"
+                    app:layout_constraintStart_toStartOf="parent"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginEnd="8dp" app:layout_constraintEnd_toStartOf="@+id/guideline19"
+                    android:layout_marginTop="8dp" app:layout_constraintTop_toTopOf="@+id/guideline6"/>
 
             <android.support.v7.widget.AppCompatAutoCompleteTextView
-                    android:inputType="textAutoComplete"
-                    android:id="@+id/editEntreprise"
+                    android:inputType="textAutoComplete|textCapCharacters"
+                    android:id="@+id/editEntrepriseUP"
                     android:textSize="18sp"
                     android:clickable="false"
                     android:paddingStart="8dp"
@@ -157,115 +194,55 @@
                     android:fontFamily="@font/montserrat"
                     android:textColorHint="#B5B5B5"
                     android:textColor="@color/colorBlack"
-                    android:background="@drawable/input_bg_unselected"
+                    android:background="@drawable/input_bg_selector"
                     android:layout_width="0dp"
-                    android:layout_height="41dp" android:textStyle="bold"
-                    android:layout_marginTop="8dp"
-                    app:layout_constraintTop_toTopOf="@+id/guideline3"
-                    app:layout_constraintBottom_toTopOf="@+id/guideline10" android:layout_marginBottom="8dp"
-                    android:layout_marginStart="16dp" app:layout_constraintStart_toStartOf="parent"
-                    android:layout_marginEnd="8dp" app:layout_constraintEnd_toStartOf="@+id/guideline11"/>
+                    android:layout_height="40dp" android:textStyle="bold"
+                    android:layout_marginStart="16dp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="@+id/guideline15"
+                    app:layout_constraintBottom_toTopOf="@+id/guideline4"
+                    android:layout_marginEnd="8dp" app:layout_constraintEnd_toStartOf="@+id/guideline19"
+                    android:textAlignment="viewStart"/>
 
 
-            <EditText
-                    android:autofillHints="@string/shift_end"
-                    android:inputType="numberSigned"
-                    android:id="@+id/editSalaire"
+            <com.aldoapps.autoformatedittext.AutoFormatEditText
+                    app:isDecimal="true"
+                    android:maxLength="4"
+                    android:id="@+id/editSalaireUP"
                     android:textSize="18sp"
                     android:paddingEnd="8dp"
-                    android:hint="€ - Salaire"
+                    android:hint="Salaire"
                     android:fontFamily="@font/montserrat"
                     android:textColorHint="#B5B5B5"
                     android:textColor="@color/colorBlack"
-                    android:background="@drawable/input_bg_unselected"
+                    android:background="@drawable/input_bg_selector"
                     android:layout_width="0dp"
-                    android:layout_height="41dp" android:textStyle="bold"
-                    app:layout_constraintEnd_toEndOf="parent" android:layout_marginStart="8dp"
-                    app:layout_constraintStart_toStartOf="@+id/guideline11" android:layout_marginTop="8dp"
-                    app:layout_constraintTop_toTopOf="@+id/guideline3"
-                    app:layout_constraintBottom_toTopOf="@+id/guideline10" android:layout_marginBottom="8dp"
-                    android:textAlignment="textEnd" android:layout_marginEnd="16dp"/>
+                    android:layout_height="40dp" android:textStyle="bold"
+                    android:textAlignment="viewEnd"
+                    app:layout_constraintTop_toTopOf="@+id/guideline15"
+                    app:layout_constraintBottom_toTopOf="@+id/guideline4"
+                    android:layout_marginStart="8dp" app:layout_constraintStart_toStartOf="@+id/guideline19"
+                    app:layout_constraintEnd_toStartOf="@+id/textView6" android:layout_marginEnd="4dp"/>
 
 
-
-            <EditText
-                    android:id="@+id/editHeureFin"
-                    android:textSize="18sp"
-                    android:clickable="false"
-                    android:cursorVisible="false"
-                    android:paddingStart="8dp"
-                    android:focusable="false"
-                    android:focusableInTouchMode="false"
-                    android:hint="@string/select_hour"
-                    android:fontFamily="@font/montserrat"
-                    android:textColorHint="#B5B5B5"
-                    android:textColor="@color/colorBlack"
-                    android:background="@drawable/input_bg_unselected"
-                    android:layout_width="0dp"
-                    android:layout_height="41dp" android:textStyle="bold"
-                    app:layout_constraintStart_toStartOf="parent"
-                    android:layout_marginStart="16dp" android:layout_marginTop="8dp"
-                    app:layout_constraintTop_toTopOf="@+id/guideline7"
-                    app:layout_constraintBottom_toTopOf="@+id/guideline8" android:layout_marginBottom="8dp"
-                    android:layout_marginEnd="8dp" app:layout_constraintEnd_toStartOf="@+id/buttonSelectHeureFin"/>
-
-            <EditText
-                    android:id="@+id/editUpWorkStartDay"
-                    android:textSize="18sp"
-                    android:clickable="false"
-                    android:cursorVisible="false"
-                    android:focusable="false"
-                    android:paddingStart="8dp"
-                    android:focusableInTouchMode="false"
-                    android:hint="Sélectionnez une heure"
-                    android:fontFamily="@font/montserrat"
-                    android:textColorHint="#B5B5B5"
-                    android:textColor="@color/colorBlack"
-                    android:background="@drawable/input_bg_unselected"
-                    android:layout_width="0dp"
-                    android:layout_height="41dp" android:textStyle="bold"
-                    app:layout_constraintStart_toStartOf="parent"
-                    android:layout_marginStart="16dp" app:layout_constraintBottom_toTopOf="@+id/guideline6"
-                    android:layout_marginBottom="8dp" android:layout_marginTop="8dp"
-                    app:layout_constraintTop_toTopOf="@+id/guideline5" android:layout_marginEnd="8dp"
-                    app:layout_constraintEnd_toStartOf="@+id/buttonSelectHeureDebut"/>
             <Button
                     android:layout_width="45dp"
                     android:layout_height="45dp"
                     android:background="@drawable/custom_hour_selector_button"
-                    android:id="@+id/buttonSelectHeureDebut"
-                    android:layout_marginEnd="16dp"
+                    android:id="@+id/buttonSelectHeureDebutUP"
                     app:layout_constraintEnd_toEndOf="parent"
-                    android:layout_marginTop="8dp"
-                    app:layout_constraintTop_toTopOf="@+id/guideline5" android:layout_marginBottom="8dp"
-                    app:layout_constraintBottom_toTopOf="@+id/guideline6"/>
-            <android.support.constraint.Guideline
-                    android:orientation="horizontal"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/guideline5" app:layout_constraintGuide_percent="0.28"/>
-            <android.support.constraint.Guideline
-                    android:orientation="horizontal"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" android:id="@+id/guideline3"
-                    app:layout_constraintGuide_percent="0.68"/>
-            <android.support.constraint.Guideline
-                    android:orientation="horizontal"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/guideline6" app:layout_constraintGuide_percent="0.4"/>
-            <android.support.constraint.Guideline
-                    android:orientation="horizontal"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/guideline7" app:layout_constraintGuide_percent="0.48"/>
+                    android:textAlignment="center"
+                    android:layout_marginEnd="16dp"
+                    app:layout_constraintBottom_toTopOf="@+id/guideline6"
+                    app:layout_constraintTop_toTopOf="@+id/guideline4" android:layout_marginTop="16dp"
+                    android:layout_marginBottom="8dp"/>
             <android.support.constraint.Guideline
                     android:orientation="horizontal"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:id="@+id/guideline8" app:layout_constraintGuide_percent="0.6"/>
             <TextView
-                    android:layout_width="0dp"
+                    android:layout_width="363dp"
                     android:textColor="@color/colorRed"
                     android:id="@+id/txtErrorLog"
                     android:textSize="16sp"
@@ -275,45 +252,67 @@
                     android:text="Aucune action requise"
                     android:gravity="bottom|center"
 
-                    android:layout_marginTop="8dp"
-                    app:layout_constraintTop_toTopOf="@+id/guideline9" android:layout_marginBottom="8dp"
-                    app:layout_constraintBottom_toBottomOf="parent" android:layout_marginEnd="8dp"
-                    app:layout_constraintEnd_toEndOf="parent" android:layout_marginStart="8dp"
-                    app:layout_constraintStart_toStartOf="parent" android:textAlignment="center"/>
+                    android:textAlignment="center"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    android:layout_marginBottom="8dp" app:layout_constraintTop_toTopOf="@+id/guideline9"
+                    app:layout_constraintEnd_toEndOf="parent" android:layout_marginEnd="8dp"
+                    app:layout_constraintStart_toStartOf="parent" android:layout_marginStart="8dp"
+                    android:layout_marginTop="8dp"/>
             <Button
                     android:layout_width="45dp"
                     android:layout_height="45dp"
                     android:background="@drawable/custom_hour_selector_button"
-                    android:id="@+id/buttonSelectHeureFin"
+                    android:id="@+id/buttonSelectHeureFinUP"
+                    app:layout_constraintEnd_toEndOf="parent"
                     android:layout_marginEnd="16dp"
-                    app:layout_constraintEnd_toEndOf="parent" android:layout_marginBottom="8dp"
-                    app:layout_constraintBottom_toTopOf="@+id/guideline8" android:layout_marginTop="8dp"
-                    app:layout_constraintTop_toTopOf="@+id/guideline7"/>
+                    android:layout_marginTop="16dp" app:layout_constraintTop_toTopOf="@+id/guideline6"
+                    android:layout_marginBottom="8dp" app:layout_constraintBottom_toTopOf="@+id/guideline8"/>
             <android.support.constraint.Guideline
                     android:orientation="horizontal"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:id="@+id/guideline9" app:layout_constraintGuide_percent="0.92"/>
+                    android:id="@+id/guideline9" app:layout_constraintGuide_percent="0.89"/>
             <android.support.constraint.Guideline
                     android:orientation="horizontal"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:id="@+id/guideline" app:layout_constraintGuide_percent="0.11"/>
+                    android:id="@+id/guideline" app:layout_constraintGuide_percent="0.1"/>
+            <android.support.constraint.Guideline
+                    android:orientation="horizontal"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/guideline10" app:layout_constraintGuide_percent="0.76"/>
+            <android.support.constraint.Guideline
+                    android:orientation="horizontal"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/guideline15" app:layout_constraintGuide_percent="0.2"/>
+            <android.support.constraint.Guideline
+                    android:orientation="horizontal"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/guideline6" app:layout_constraintGuide_percent="0.45"/>
             <android.support.constraint.Guideline
                     android:orientation="vertical"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:id="@+id/guideline2" app:layout_constraintGuide_percent="0.47"/>
+                    android:id="@+id/guideline19" app:layout_constraintGuide_percent="0.58"/>
             <android.support.constraint.Guideline
                     android:orientation="horizontal"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:id="@+id/guideline10" app:layout_constraintGuide_percent="0.79"/>
-            <android.support.constraint.Guideline
-                    android:orientation="vertical"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/guideline11" app:layout_constraintGuide_percent="0.59"/>
+                    android:id="@+id/guideline21" app:layout_constraintGuide_percent="0.7"/>
+            <CheckBox
+                    android:layoutDirection="rtl"
+                    android:text="Déduit de vos heures étudiantes"
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:id="@+id/checkBoxHeureEtudiantesUP" android:checked="true"
+                    android:fontFamily="@font/montserrat" android:textSize="18sp" android:layout_marginEnd="16dp"
+                    app:layout_constraintEnd_toEndOf="parent" android:layout_marginStart="16dp"
+                    app:layout_constraintStart_toStartOf="parent" android:layout_marginTop="8dp"
+                    app:layout_constraintTop_toTopOf="@+id/guideline8" android:layout_marginBottom="8dp"
+                    app:layout_constraintBottom_toTopOf="@+id/guideline21" android:textColor="@color/colorPrimaryDark"/>
         </android.support.constraint.ConstraintLayout>
 
     </LinearLayout>
@@ -330,7 +329,7 @@
                 android:layout_height="match_parent">
 
             <Button
-                    android:id="@+id/btnEnregistrer"
+                    android:id="@+id/btnEnregistrerUP"
                     android:text="Enregistrer"
                     android:textColor="#FFF"
                     android:background="@drawable/selector_button_enregistrer"
@@ -340,12 +339,12 @@
                     android:layout_width="match_parent"
                     android:layout_height="50dp"
                     app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintBottom_toTopOf="@+id/btnAnnuler" app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintBottom_toTopOf="@+id/btnAnnulerUP" app:layout_constraintStart_toStartOf="parent"
                     android:layout_marginStart="16dp" app:layout_constraintEnd_toEndOf="parent"
                     android:layout_marginEnd="16dp"/>
             <Button
 
-                    android:id="@+id/btnAnnuler"
+                    android:id="@+id/btnAnnulerUP"
                     android:text="Annuler"
                     android:fontFamily="@font/montserrat"
                     android:textColor="#FFF"
@@ -355,7 +354,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="50dp"
                     app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/btnEnregistrer"
+                    app:layout_constraintTop_toBottomOf="@+id/btnEnregistrerUP"
                     app:layout_constraintEnd_toEndOf="parent" android:layout_marginEnd="16dp"
                     app:layout_constraintStart_toStartOf="parent" android:layout_marginStart="16dp"/>
         </android.support.constraint.ConstraintLayout>
